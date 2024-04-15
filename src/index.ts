@@ -1,3 +1,14 @@
-const hello: string = "hello world";
+import { DataSource } from "typeorm";
+import { Country } from "./Country";
 
-console.log(hello);
+async function main() {
+  const dataSource = new DataSource({
+    type: "sqlite",
+    database: "db.sqlite",
+    entities: [Country],
+    synchronize: true,
+  });
+  await dataSource.initialize();
+}
+
+main();
