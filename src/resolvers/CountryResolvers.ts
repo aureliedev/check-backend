@@ -24,15 +24,11 @@ export class CountryResolvers {
   ) {
     return Country.getCountriesByContinentCode(continentCode);
   }
+
   @Mutation(() => String)
   async deleteCountry(
     @Arg("code", () => String) code: string
   ): Promise<string> {
-    const country = await Country.findOneBy({ code });
-    if (country) {
-      await Country.remove(country);
-      return `Country with code: ${code} was successfully deleted.`;
-    }
-    throw new Error(`The country does not exist with the code: ${code}.`);
+    return Country.deleteCountry(code);
   }
 }

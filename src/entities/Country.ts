@@ -78,12 +78,13 @@ export class Country extends BaseEntity {
     const newCountry = new Country(countryData);
     return await newCountry.save();
   }
+
   static async deleteCountry(code: string): Promise<string> {
-    const country = await Country.findOneBy({ code });
+    const country = await Country.getCountryByCode(code);
     if (!country) {
-      throw new Error(`The country does not exist with the code: ${code}.`);
+      throw new Error(`No country exists with the code: ${code}.`);
     }
-    await Country.remove(country);
+    await Country.delete({ code });
     return `Country with code: ${code} was successfully deleted.`;
   }
 }
